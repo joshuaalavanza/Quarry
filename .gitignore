@@ -24,8 +24,14 @@ frontend/dist/
 .DS_Store
 Thumbs.db
 
-# Database (keep ChromaDB for faster setup)
-# data/chroma/ is INCLUDED (don't ignore it)
+# ChromaDB is tracked so cloners get pre-populated data without re-running ingestion.
+# Ignore runtime churn files that change on every query.
+data/chroma/**/data_level0.bin
+data/chroma/**/length.bin
+data/chroma/chroma.sqlite3
+
+# SQLite user/attempt DB — runtime state, not source data
+data/quarry.db
 
 # Temp files
 *.tmp

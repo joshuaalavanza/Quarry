@@ -634,7 +634,11 @@ def drop_in(body: DropInRequest, _user: dict = Depends(require_user)):
     try:
         parsed = json.loads(raw)
     except json.JSONDecodeError:
-        raise HTTPException(status_code=422, detail=f"Could not parse question from response: {raw[:200]}")
+        try:
+            from json_repair import repair_json
+            parsed = json.loads(repair_json(raw))
+        except Exception:
+            raise HTTPException(status_code=422, detail=f"Could not parse question from response: {raw[:200]}")
 
     skill  = parsed.get("skill",  _KNOWN_SKILLS[0])
     domain = parsed.get("domain", _KNOWN_DOMAINS[0])
