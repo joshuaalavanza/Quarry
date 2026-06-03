@@ -70,6 +70,15 @@
   display: block;
 }
 
+/* ── question text fallback (when no PDF crop) ── */
+.questionTextExpanded {
+  margin: 14px 0 6px;
+  font-size: .9rem;
+  color: #1f2937;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
 /* ── answer choices ── */
 .choices {
   list-style: none; margin: 14px 0;

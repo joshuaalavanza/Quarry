@@ -87,10 +87,12 @@ function Detail({ detail, similar, loadingSimilar, onMoreLikeThis, onAnswer }) {
 
   return (
     <div className={styles.detail}>
-      {detail.image_url && (
+      {detail.image_url ? (
         <div className={styles.pdfCrop}>
           <img src={detail.image_url} alt="Question" />
         </div>
+      ) : (
+        <p className={styles.questionTextExpanded}>{detail.question_text}</p>
       )}
 
       {isGridIn ? (
