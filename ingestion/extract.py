@@ -87,15 +87,26 @@ def save_question_crops(
             hits2 = page.search_for("Correct Answer:")
             crop_bottom = hits2[0].y0 - 8 if hits2 else h * 0.58
 
-        # MC: tighten bottom to just above the first "A." choice
+        # MC: tighten bottom to just above the first "A." answer choice.
+        # Strategy: the real "A." choice sits immediately above "B." (~40pt gap);
+        # passage text containing "A." (e.g. "DNA.") is much further from "B.".
+        # So find the "A." that is closest from above to the first "B." in range,
+        # then accept it only if the gap is < 75pt (real choices) vs > 75pt (false hits).
         if mc_ids is None or qid in mc_ids:
             a_hits = page.search_for("A.", quads=False)
-            in_range = [r for r in a_hits if crop_top < r.y0 < crop_bottom]
-            if in_range:
-                candidate = min(in_range, key=lambda r: r.y0).y0 - 6
-                # Only use the tighter crop if it leaves a meaningful height
-                if candidate - crop_top > 20:
-                    crop_bottom = candidate
+            b_hits = page.search_for("B.", quads=False)
+            in_range_a = [r for r in a_hits if crop_top < r.y0 < crop_bottom]
+            in_range_b = [r for r in b_hits if crop_top < r.y0 < crop_bottom]
+            if in_range_b and in_range_a:
+                first_b = min(in_range_b, key=lambda r: r.y0)
+                # Highest A. that still sits above first B.
+                above_b = [r for r in in_range_a if r.y0 < first_b.y0]
+                if above_b:
+                    closest_a = max(above_b, key=lambda r: r.y0)
+                    if first_b.y0 - closest_a.y0 < 75:
+                        candidate = closest_a.y0 - 6
+                        if candidate - crop_top > 20:
+                            crop_bottom = candidate
 
         # Skip if crop region is empty or too small to render
         if crop_bottom - crop_top < 10:

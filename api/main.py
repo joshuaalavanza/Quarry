@@ -100,6 +100,7 @@ def _build_where(domain, skill, difficulty, source, domains=None) -> dict | None
 
 
 _IMAGE_BASE = "http://localhost:8000/images"
+_IMAGE_VERSION = "2"  # bump whenever crops are regenerated to bust browser cache
 
 
 def _to_detail(qid: str, doc: str, meta: dict) -> QuestionDetail:
@@ -114,7 +115,7 @@ def _to_detail(qid: str, doc: str, meta: dict) -> QuestionDetail:
         choices=json.loads(meta["choices"]),
         correct_answer=meta["correct_answer"],
         explanation=meta["explanation"],
-        image_url=f"{_IMAGE_BASE}/{img_path}" if img_path else None,
+        image_url=f"{_IMAGE_BASE}/{img_path}?v={_IMAGE_VERSION}" if img_path else None,
     )
 
 
@@ -172,7 +173,7 @@ def similar_questions(question_id: str, n: int = Query(3, ge=1, le=10)):
             choices=r.choices,
             correct_answer=r.correct_answer,
             explanation=r.explanation,
-            image_url=f"{_IMAGE_BASE}/{r.image_path}" if r.image_path else None,
+            image_url=f"{_IMAGE_BASE}/{r.image_path}?v={_IMAGE_VERSION}" if r.image_path else None,
             distance=r.distance,
             fallback_used=r.fallback_used,
         )
@@ -419,7 +420,7 @@ def get_student_detail(user_id: int, request: Request, _admin: dict = Depends(re
                 "correct_answer": meta.get("correct_answer", ""),
                 "choices":       json.loads(meta.get("choices", "[]")),
                 "explanation":   meta.get("explanation", ""),
-                "image_url":     f"{_IMAGE_BASE}/{img}" if img else None,
+                "image_url":     f"{_IMAGE_BASE}/{img}?v={_IMAGE_VERSION}" if img else None,
                 "created_at":    a.created_at.isoformat(),
             })
 
@@ -666,7 +667,7 @@ def drop_in(body: DropInRequest, _user: dict = Depends(require_user)):
             choices=r.choices,
             correct_answer=r.correct_answer,
             explanation=r.explanation,
-            image_url=f"{_IMAGE_BASE}/{r.image_path}" if r.image_path else None,
+            image_url=f"{_IMAGE_BASE}/{r.image_path}?v={_IMAGE_VERSION}" if r.image_path else None,
             distance=r.distance,
             fallback_used=r.fallback_used,
         )
