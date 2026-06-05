@@ -6,9 +6,16 @@ const SUBJECTS = [
   { value: 'English', label: 'English' },
 ]
 
+const PROGRESS_OPTIONS = [
+  { value: '',          label: 'All' },
+  { value: 'hide-done', label: 'Hide done' },
+  { value: 'done-only', label: 'Done only' },
+]
+
 export default function FilterSidebar({
   filters, subject, subjectDomains, domain, skill, difficulty,
   onSubjectChange, onDomainChange, onSkillChange, onDifficultyChange,
+  progressFilter, onProgressFilterChange,
   sessionAttempts, allAttempts, onResetSession,
 }) {
   // Domains shown depend on subject selection
@@ -32,9 +39,10 @@ export default function FilterSidebar({
     onDomainChange('')
     onSkillChange('')
     onDifficultyChange('')
+    onProgressFilterChange('')
   }
 
-  const hasFilters = subject || domain || skill || difficulty
+  const hasFilters = subject || domain || skill || difficulty || progressFilter
 
   return (
     <aside className={styles.sidebar}>
@@ -93,6 +101,22 @@ export default function FilterSidebar({
           {filters.difficulties?.map(d => <option key={d} value={d}>{d}</option>)}
         </select>
       </label>
+
+      {/* Progress */}
+      <div className={styles.group}>
+        <span className={styles.heading}>Progress</span>
+        <div className={styles.progressRow}>
+          {PROGRESS_OPTIONS.map(opt => (
+            <button
+              key={opt.value}
+              className={`${styles.progressBtn} ${progressFilter === opt.value ? styles.progressActive : ''}`}
+              onClick={() => onProgressFilterChange(opt.value)}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {hasFilters && (
         <button className={styles.clear} onClick={clearAll}>

@@ -48,11 +48,12 @@ export default function App() {
   }
 
   // ── filters ───────────────────────────────────────────────────────────────
-  const [filters, setFilters]       = useState({ domains: [], skills: [], skills_by_domain: {}, difficulties: [] })
-  const [subject, setSubject]       = useState('')
-  const [domain, setDomain]         = useState('')
-  const [skill, setSkill]           = useState('')
-  const [difficulty, setDifficulty] = useState('')
+  const [filters, setFilters]           = useState({ domains: [], skills: [], skills_by_domain: {}, difficulties: [] })
+  const [subject, setSubject]           = useState('')
+  const [domain, setDomain]             = useState('')
+  const [skill, setSkill]               = useState('')
+  const [difficulty, setDifficulty]     = useState('')
+  const [progressFilter, setProgressFilter] = useState('')  // '' | 'hide-done' | 'done-only'
 
   const subjectDomains = subject === 'Math'    ? MATH_DOMAINS
                        : subject === 'English' ? ENGLISH_DOMAINS
@@ -107,8 +108,13 @@ export default function App() {
   const [allAttempts, setAllAttempts]         = useState([])
   const [sessionAttempts, setSessionAttempts] = useState([])
 
-  // keep attempts alias so QuestionCard's alreadyAnswered check still works
   const attempts = allAttempts
+  const doneIds  = new Set(allAttempts.map(a => a.questionId))
+  const displayedQuestions = progressFilter === 'hide-done'
+    ? questions.filter(q => !doneIds.has(q.id))
+    : progressFilter === 'done-only'
+      ? questions.filter(q => doneIds.has(q.id))
+      : questions
 
   function handleAnswer(questionId, questionSkill, questionDomain, isCorrect, chosenAnswer) {
     if (allAttempts.some(a => a.questionId === questionId)) return
@@ -175,6 +181,8 @@ export default function App() {
           onDomainChange={handleDomainChange}
           onSkillChange={v => { setSkill(v); setExpandedId(null) }}
           onDifficultyChange={v => { setDifficulty(v); setExpandedId(null) }}
+          progressFilter={progressFilter}
+          onProgressFilterChange={setProgressFilter}
           sessionAttempts={sessionAttempts}
           allAttempts={allAttempts}
           onResetSession={() => setSessionAttempts([])}
@@ -182,9 +190,9 @@ export default function App() {
 
         <main className={styles.main}>
           <p className={styles.count}>
-            {loadingQ ? 'Loading…' : `${questions.length} question${questions.length !== 1 ? 's' : ''}`}
+            {loadingQ ? 'Loading…' : `${displayedQuestions.length} question${displayedQuestions.length !== 1 ? 's' : ''}`}
           </p>
-          {!loadingQ && questions.map(q => (
+          {!loadingQ && displayedQuestions.map(q => (
             <QuestionCard
               key={q.id}
               summary={q}
