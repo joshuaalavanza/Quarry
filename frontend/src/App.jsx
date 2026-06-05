@@ -23,7 +23,17 @@ export default function App() {
     const token = localStorage.getItem('quarry_token')
     if (!token) { setAuthReady(true); return }
     api.getMe()
-      .then(data => setUser({ userId: data.user_id, username: data.username, is_admin: data.is_admin ?? false }))
+      .then(data => {
+        setUser({ userId: data.user_id, username: data.username, is_admin: data.is_admin ?? false })
+        return api.getProgress()
+      })
+      .then(history => {
+        setAllAttempts(history.map(a => ({
+          questionId: a.question_id,
+          skill:      a.skill,
+          isCorrect:  a.is_correct,
+        })))
+      })
       .catch(() => localStorage.removeItem('quarry_token'))
       .finally(() => setAuthReady(true))
   }, [])
