@@ -100,7 +100,7 @@ def _build_where(domain, skill, difficulty, source, domains=None) -> dict | None
 
 
 _IMAGE_BASE = "http://localhost:8000/images"
-_IMAGE_VERSION = "2"  # bump whenever crops are regenerated to bust browser cache
+_IMAGE_VERSION = "3"  # bump whenever crops are regenerated to bust browser cache
 
 
 def _to_detail(qid: str, doc: str, meta: dict) -> QuestionDetail:

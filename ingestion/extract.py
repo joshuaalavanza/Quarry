@@ -79,13 +79,15 @@ def save_question_crops(
         top_hits = page.search_for(f"ID: {qid}", quads=False)
         crop_top = top_hits[0].y1 + 14 if top_hits else 0
 
-        # BOTTOM: just above the "ID: <hex> Answer" header
+        # BOTTOM: just above the "ID: <hex> Answer" header.
+        # If the answer section is on the next page, fall back to the full page
+        # height so multi-page questions (graph + passage + stem) aren't clipped.
         ans_hits = page.search_for(f"ID: {qid} Answer", quads=False)
         if ans_hits:
             crop_bottom = ans_hits[0].y0 - 8
         else:
             hits2 = page.search_for("Correct Answer:")
-            crop_bottom = hits2[0].y0 - 8 if hits2 else h * 0.58
+            crop_bottom = hits2[0].y0 - 8 if hits2 else h
 
         # MC: tighten bottom to just above the first "A." answer choice.
         # Strategy: the real "A." choice sits immediately above "B." (~40pt gap);
