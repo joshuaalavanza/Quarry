@@ -64,6 +64,7 @@ export default function App() {
   const [skill, setSkill]               = useState('')
   const [difficulty, setDifficulty]     = useState('')
   const [progressFilter, setProgressFilter] = useState('')  // '' | 'hide-done' | 'done-only'
+  const [searchQuery, setSearchQuery]       = useState('')
 
   const subjectDomains = subject === 'Math'    ? MATH_DOMAINS
                        : subject === 'English' ? ENGLISH_DOMAINS
@@ -83,9 +84,9 @@ export default function App() {
 
   function handleSubjectChange(v) {
     setSubject(prev => prev === v ? '' : v)
-    setDomain(''); setSkill(''); setExpandedId(null)
+    setDomain(''); setSkill(''); setExpandedId(null); setSearchQuery('')
   }
-  function handleDomainChange(v) { setDomain(v); setSkill(''); setExpandedId(null) }
+  function handleDomainChange(v) { setDomain(v); setSkill(''); setExpandedId(null); setSearchQuery('') }
 
   // ── questions ─────────────────────────────────────────────────────────────
   const [questions, setQuestions]   = useState([])
@@ -120,11 +121,12 @@ export default function App() {
 
   const attempts = allAttempts
   const doneIds  = new Set(allAttempts.map(a => a.questionId))
-  const displayedQuestions = progressFilter === 'hide-done'
-    ? questions.filter(q => !doneIds.has(q.id))
-    : progressFilter === 'done-only'
-      ? questions.filter(q => doneIds.has(q.id))
-      : questions
+  const needle   = searchQuery.trim().toLowerCase()
+  const displayedQuestions = questions
+    .filter(q => progressFilter === 'hide-done' ? !doneIds.has(q.id)
+               : progressFilter === 'done-only'  ?  doneIds.has(q.id)
+               : true)
+    .filter(q => !needle || q.question_text.toLowerCase().includes(needle))
 
   function handleAnswer(questionId, questionSkill, questionDomain, isCorrect, chosenAnswer) {
     if (allAttempts.some(a => a.questionId === questionId)) return
@@ -199,6 +201,15 @@ export default function App() {
         />
 
         <main className={styles.main}>
+          <div className={styles.searchRow}>
+            <input
+              className={styles.searchInput}
+              type="search"
+              placeholder="Search questions…"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+          </div>
           <p className={styles.count}>
             {loadingQ ? 'Loading…' : `${displayedQuestions.length} question${displayedQuestions.length !== 1 ? 's' : ''}`}
           </p>
