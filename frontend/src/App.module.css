@@ -1,7 +1,7 @@
 .app { min-height: 100vh; display: flex; flex-direction: column; }
 
 .header {
-  background: #1e3a5f;
+  background: #004ba1;
   color: #fff;
   padding: 14px 24px;
   display: flex;
@@ -74,7 +74,7 @@
 }
 .searchInput:focus {
   outline: none;
-  border-color: #1e3a5f;
+  border-color: #004ba1;
 }
 .searchInput::placeholder { color: #9ca3af; }
 

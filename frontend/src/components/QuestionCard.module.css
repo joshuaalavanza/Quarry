@@ -7,7 +7,7 @@
   transition: box-shadow .15s;
 }
 .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.08); }
-.expanded { border-color: #1e3a5f; }
+.expanded { border-color: #004ba1; }
 
 .toggle {
   width: 100%;
@@ -95,7 +95,7 @@
 .choice > span:nth-child(2) { flex: 1; min-width: 0; }
 
 .clickable { cursor: pointer; }
-.clickable:hover { border-color: #1e3a5f; background: #f0f4ff; }
+.clickable:hover { border-color: #004ba1; background: #f0f4ff; }
 
 .choiceLabel {
   font-weight: 700; color: #6b7280;
@@ -177,7 +177,7 @@
   align-items: center;
   gap: 7px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, #1e3a5f, #2563eb);
+  background: linear-gradient(135deg, #004ba1, #2563eb);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -231,13 +231,13 @@
 .aiText {
   padding: 12px 14px;
   font-size: .875rem;
-  color: #1e3a5f;
+  color: #004ba1;
   line-height: 1.65;
 }
 .aiText p  { margin: 0 0 10px; }
 .aiText p:last-child { margin-bottom: 0; }
-.aiText h2 { font-size: 1rem; font-weight: 700; margin: 0 0 8px; color: #1e3a5f; }
-.aiText h3 { font-size: .9rem; font-weight: 700; margin: 0 0 6px; color: #1e3a5f; }
+.aiText h2 { font-size: 1rem; font-weight: 700; margin: 0 0 8px; color: #004ba1; }
+.aiText h3 { font-size: .9rem; font-weight: 700; margin: 0 0 6px; color: #004ba1; }
 .aiText strong { font-weight: 700; }
 .aiText em     { font-style: italic; }
 .aiCursor {
@@ -254,7 +254,7 @@
 .similarSection { margin-top: 16px; }
 
 .moreLikeThis {
-  padding: 8px 16px; background: #1e3a5f; color: #fff;
+  padding: 8px 16px; background: #004ba1; color: #fff;
   border: none; border-radius: 6px;
   font-size: .85rem; font-weight: 600; cursor: pointer;
   transition: background .15s;

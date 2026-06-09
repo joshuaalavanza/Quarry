@@ -40,14 +40,14 @@
   cursor: pointer;
   transition: border-color .12s, background .12s;
 }
-.subjectBtn:hover:not(:disabled) { border-color: #1e3a5f; background: #f0f4ff; }
+.subjectBtn:hover:not(:disabled) { border-color: #004ba1; background: #f0f4ff; }
 
 .subjectActive {
-  border-color: #1e3a5f;
-  background: #1e3a5f;
+  border-color: #004ba1;
+  background: #004ba1;
   color: #fff;
 }
-.subjectActive:hover { background: #1e3a5f !important; border-color: #1e3a5f !important; }
+.subjectActive:hover { background: #004ba1 !important; border-color: #004ba1 !important; }
 
 .subjectDisabled {
   opacity: .4;
@@ -71,7 +71,7 @@
   background: #fff;
   cursor: pointer;
 }
-.select:focus { outline: 2px solid #1e3a5f; outline-offset: 1px; }
+.select:focus { outline: 2px solid #004ba1; outline-offset: 1px; }
 
 .clear {
   padding: 7px 10px;
@@ -103,14 +103,14 @@
   transition: border-color .12s, background .12s;
   white-space: nowrap;
 }
-.progressBtn:hover { border-color: #1e3a5f; background: #f0f4ff; }
+.progressBtn:hover { border-color: #004ba1; background: #f0f4ff; }
 
 .progressActive {
-  border-color: #1e3a5f;
-  background: #1e3a5f;
+  border-color: #004ba1;
+  background: #004ba1;
   color: #fff;
 }
-.progressActive:hover { background: #1e3a5f !important; border-color: #1e3a5f !important; }
+.progressActive:hover { background: #004ba1 !important; border-color: #004ba1 !important; }
 
 /* ── session panel ── */
 .sessionEmpty {
@@ -159,7 +159,7 @@
 }
 .pillActive {
   background: #fff;
-  color: #1e3a5f;
+  color: #004ba1;
   box-shadow: 0 1px 3px rgba(0,0,0,.1);
 }
 
@@ -186,7 +186,7 @@
 .scoreNum {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #1e3a5f;
+  color: #004ba1;
   line-height: 1;
 }
 .scoreDen { font-size: 1rem; font-weight: 400; color: #9ca3af; }
@@ -200,7 +200,7 @@
 }
 .barFill {
   height: 100%;
-  background: #1e3a5f;
+  background: #004ba1;
   border-radius: 99px;
   transition: width .4s ease;
 }
