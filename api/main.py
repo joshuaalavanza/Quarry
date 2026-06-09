@@ -40,7 +40,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="Quarry", description="SAT question bank API", lifespan=lifespan)
+app = FastAPI(title="Methodize Question Bank", description="SAT question bank API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

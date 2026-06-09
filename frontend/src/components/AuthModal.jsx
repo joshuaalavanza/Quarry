@@ -27,7 +27,7 @@ export default function AuthModal({ onLogin }) {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <h2 className={styles.title}>Welcome to Quarry</h2>
+        <h2 className={styles.title}>Welcome to Methodize</h2>
         <p className={styles.subtitle}>Enter a username to save your progress across sessions.</p>
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
